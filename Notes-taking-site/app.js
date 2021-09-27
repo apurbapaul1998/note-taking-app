@@ -14,9 +14,16 @@ addBtn.addEventListener("click", function (e) {
     notesObj.push(addTxt.value);
     localStorage.setItem("notes", JSON.stringify(notesObj));
     addTxt.value = ""; //to make the text area empty upon pushing to the notes section
-    console.log(notesObj);
+    // console.log(notesObj);
     showNotes();
 })
+
+// var today = new Date();
+// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+// document.getElementById("currentDate").innerHTML = date;
+
+
+
 //function to show elements from localstorage
 function showNotes() {
     let notes = localStorage.getItem("notes");
@@ -30,7 +37,7 @@ function showNotes() {
     notesObj.forEach(function (element, index) {    //appending the notes in the card
         html += `<div class="noteCard my-2 mx-2 card" style="width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">Note ${index + 1}</h5>
+            <h5 class="card-title">Note ${index + 1},<span id='currentDate'></span></h5>
             <p class="card-text">${element}</p>
             <button id="${index}" onclick="deleteNote(this.id)" class="btn btn-primary">Delete Node</button>
         </div>
@@ -48,7 +55,7 @@ function showNotes() {
 
 //function to delete a note
 function deleteNote(index){
-    console.log('I am deleting',index);
+    // console.log('I am deleting',index);
     let notes = localStorage.getItem("notes");
     if (notes == null) {
         notesObj = []; //an array
@@ -61,3 +68,33 @@ function deleteNote(index){
     localStorage.setItem("notes", JSON.stringify(notesObj));
     showNotes();
 }
+// function AddZero(num) {
+//     return (num >= 0 && num < 10) ? "0" + num : num + "";
+// }
+
+// window.onload = function() {
+//     var now = new Date();
+//     var strDateTime = [[AddZero(now.getDate()), 
+//         AddZero(now.getMonth() + 1), 
+//         now.getFullYear()].join("/"), 
+//         [AddZero(now.getHours()), 
+//         AddZero(now.getMinutes())].join(":"), 
+//         now.getHours() >= 12 ? "PM" : "AM"].join(" ");
+//     document.getElementById("Console").innerHTML = "Now: " + strDateTime;
+// };
+
+let search=document.getElementById('searchTxt');
+search.addEventListener("input", ()=>{
+    let inputVal=search.value.toLowerCase();  //storing the search term into inputVal to search among the cards //using tolowercase to so that the searhbutton works if the user writes in capital letter also 
+    //console.log("input listener fired",inputVal);
+    let noteCards=document.getElementsByClassName('noteCard'); //searching through the cards
+    Array.from(noteCards).forEach(function(element){ 
+        let cardTxt=element.getElementsByTagName("p")[0].innerText;
+        if(cardTxt.includes(inputVal)){
+            element.style.display="block";
+        }
+        else{
+            element.style.display="none";
+        }
+    })
+})
