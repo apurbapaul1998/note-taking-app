@@ -104,4 +104,5 @@ search.addEventListener("input", ()=>{
 /*Future features:
 1.add titles
 2.mark as important(that card will turn into another colour
-*/
+3.sync and host to web server using digitalOcean, vps and db.
+*/ 
